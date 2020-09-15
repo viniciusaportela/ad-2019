@@ -1,5 +1,5 @@
 declare interface Person {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   friend?: string;
