@@ -18,6 +18,11 @@ import Delete from "../../assets/images/delete.png";
 
 import UserService from "../../services/UserService";
 
+/**
+ * =================
+ * Styled Components
+ * =================
+ */
 const Container = styled.div``;
 
 const Background = styled.div`
@@ -143,12 +148,25 @@ const ColDivider = styled.div`
 
 const Label = styled.label``;
 
+// =================================
+
 function Main() {
+  /**
+   * People List State
+   */
   const [people, setPeople] = useState<Person[]>([]);
 
+  /**
+   * States for Manipulating the View
+   * for Edit and Create People
+   */
   const [creatingEditing, setCreatingEditing] = useState(true);
   const [action, setAction] = useState<"create" | "edit" | undefined>();
+  const [editingId, setEditingId] = useState<string | undefined>();
 
+  /**
+   * Inputs from Edit/Create View
+   */
   const [nameInput, setNameInput] = useState("");
   const [emailInput, setEmailInput] = useState("");
 
@@ -160,9 +178,20 @@ function Main() {
       });
   }, []);
 
-  const openCreateEditView = () => {
+  const openCreateView = () => {
     setCreatingEditing(true);
+    setAction("create");
   };
+
+  const openEditView = (editingId: string) => {
+    setCreatingEditing(true);
+    setAction("edit");
+    setEditingId(editingId);
+  };
+
+  const createPerson = () => {};
+
+  const editPerson = () => {};
 
   const deletePerson = (id: string) => {};
 
@@ -198,7 +227,7 @@ function Main() {
           <HeaderButton
             withImage={Plus}
             imageSize="12px"
-            onClick={openCreateEditView}
+            onClick={openCreateView}
           />
         </Header>
         {creatingEditing && (
@@ -210,11 +239,13 @@ function Main() {
               </Col>
               <ColDivider />
               <Col style={{ flex: 1 }}>
-                <Label htmlFor="name">Email</Label>
-                <Input state={[emailInput, setNameInput]} id="name" />
+                <Label htmlFor="email">Email</Label>
+                <Input state={[emailInput, setNameInput]} id="email" />
               </Col>
             </Row>
-            <AddEditButton>
+            <AddEditButton
+              onClick={action === "edit" ? () => editPerson() : createPerson}
+            >
               {action === "edit" ? "Editar" : "Adicionar"}
             </AddEditButton>
           </InputContainer>
