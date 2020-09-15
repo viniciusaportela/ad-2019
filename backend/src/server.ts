@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import Routes from "./routes";
+import handleErrors from "./middlewares/handleErrors";
 
 /**
  * ENV
@@ -23,6 +24,7 @@ mongoose
     const app = express();
 
     app.use(bodyParser.json());
+    app.use(handleErrors);
     app.use(cors());
 
     app.use("/v1", Routes);
@@ -30,4 +32,7 @@ mongoose
     app.listen(config.port, () => {
       console.log(`Server is up on port ${config.port}`);
     });
-  });
+  })
+  .catch((e) =>
+    console.log("Error when trying to connect to Mongo Database: ", e)
+  );
