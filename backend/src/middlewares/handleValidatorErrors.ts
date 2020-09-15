@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
+
 import { ValidationError } from "../constants/Errors";
 
 export default function handleValidatorErrors(

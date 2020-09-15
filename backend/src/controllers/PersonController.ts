@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { body } from "express-validator";
-import { ErrorCodes, ValidationError } from "../constants/Errors";
 
+import { ErrorCodes } from "../constants/Errors";
 import UserService from "../services/PersonService";
 
 export default class PersonController {

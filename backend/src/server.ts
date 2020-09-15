@@ -16,7 +16,11 @@ import config from "./config";
  */
 const mongoUri = `mongodb+srv://${config.mongoUser}:${config.mongoPassword}@${config.mongoHost}/${config.mongoDatabase}`;
 mongoose
-  .connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
   .then(() => {
     /**
      * Express Setup

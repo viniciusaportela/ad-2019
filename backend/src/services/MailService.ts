@@ -1,3 +1,3 @@
 export default class MailService {
-  sendToAll() {}
+  sendTo(emails: string[]) {}
 }
