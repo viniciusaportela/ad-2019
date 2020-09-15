@@ -1,4 +1,4 @@
-import UserService from "../services/UserService";
+import UserService from "../services/PersonService";
 import { body } from "express-validator";
 
 export const createValidator = [];
