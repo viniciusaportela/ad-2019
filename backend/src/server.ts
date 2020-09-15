@@ -24,10 +24,11 @@ mongoose
     const app = express();
 
     app.use(bodyParser.json());
-    app.use(handleErrors);
     app.use(cors());
 
     app.use("/v1", Routes);
+
+    app.use(handleErrors);
 
     app.listen(config.port, () => {
       console.log(`Server is up on port ${config.port}`);

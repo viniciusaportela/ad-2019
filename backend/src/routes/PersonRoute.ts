@@ -1,13 +1,26 @@
 import { Router } from "express";
 
+import PersonController from "../controllers/PersonController";
+import handleValidatorErrors from "../middlewares/handleValidatorErrors";
+
 const router = Router();
 
-router.get("/");
+router.get("/", PersonController.list);
 
-router.post("/");
+router.post(
+  "/",
+  PersonController.insertValidator,
+  handleValidatorErrors,
+  PersonController.create
+);
 
-router.put("/:person");
+router.put(
+  "/:person",
+  PersonController.insertValidator,
+  handleValidatorErrors,
+  PersonController.update
+);
 
-router.get("/:person");
+router.delete("/:person", PersonController.delete);
 
 export default router;

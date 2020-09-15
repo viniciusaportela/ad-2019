@@ -9,7 +9,7 @@ Carrega as credenciais salvas no `.env`, facilitando o acesso das informações 
 
 ## Constants
 
-Salvos todas as constantes do sistema, atualmente salva apenas as Classes de Erro
+Salvos todas as constantes do sistema, atualmente salva apenas as classes de **Erro**
 
 ## Controllers
 
@@ -23,13 +23,10 @@ Localização de todos as coleções do banco de dados MongoDB
 
 Salvo middlewares usados pelos Express:
 
-| Middleware            | Descrição                                                           |
-| --------------------- | ------------------------------------------------------------------- |
-| handleErrors          | Pega todos os errors jogados pelo sistema e                         |
-|                       | transforma em uma resposta para o usuário                           |
-| ------------          | ---------------------                                               |
-| handleValidatorErrors | Trata todos os campos verificados pelo express-validator e se algum |
-|                       | campo estiver inválido "jogar" um erro como retorno                 |
+| Middleware            | Descrição                                                                                                               |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| handleErrors          | Pega todos os errors jogados pelo sistema e transforma em uma resposta para o usuário                                   |  |
+| handleValidatorErrors | Trata todos os campos verificados pelo express-validator e se algum campo estiver inválido "jogar" um erro como retorno |
 
 ## Routes
 

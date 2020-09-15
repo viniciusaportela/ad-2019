@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import { HttpError } from "../constants/Errors";
 
 export default async function handleErrors(
   err: any,
@@ -7,13 +6,10 @@ export default async function handleErrors(
   res: Response,
   next: NextFunction
 ) {
-  res.status(err.code || 500).json(
-    err instanceof HttpError
-      ? {
-          error: err.errorCode,
-          code: err.code,
-          description: err.description,
-        }
-      : { error: "internal_error" }
-  );
+  res.status(err.statusCode || 500).json({
+    error: err.errorCode || "internal_error",
+    code: err.statusCode || 500,
+    field: err.field,
+    desc: err.description,
+  });
 }
