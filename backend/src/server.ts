@@ -14,18 +14,20 @@ import config from "./config";
  * MongoDB Setup
  */
 const mongoUri = `mongodb+srv://${config.mongoUser}:${config.mongoPassword}@${config.mongoHost}/${config.mongoDatabase}`;
-mongoose.connect(mongoUri);
+mongoose
+  .connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    /**
+     * Express Setup
+     */
+    const app = express();
 
-/**
- * Express Setup
- */
-const app = express();
+    app.use(bodyParser.json());
+    app.use(cors());
 
-app.use(bodyParser.json());
-app.use(cors());
+    app.use("/v1", Routes);
 
-app.use("/v1", Routes);
-
-app.listen(config.port, () => {
-  console.log("Server is up on port ${}");
-});
+    app.listen(config.port, () => {
+      console.log(`Server is up on port ${config.port}`);
+    });
+  });
