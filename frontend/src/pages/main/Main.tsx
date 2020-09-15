@@ -16,7 +16,7 @@ import Plus from "../../assets/images/plus.png";
 import Edit from "../../assets/images/edit.png";
 import Delete from "../../assets/images/delete.png";
 
-import UserService from "../../services/UserService";
+import PersonService from "../../services/PersonService";
 
 /**
  * =================
@@ -99,6 +99,15 @@ const HeaderButton = styled(Button)`
   margin: 0 ${Sizings.MARGIN_1};
 `;
 
+const HeaderAddButton = styled(HeaderButton).attrs(
+  ({ close }: { close?: boolean }) => ({
+    styleImage: {
+      transform: `rotate(${close ? "45deg" : 0})`,
+      transition: "transform 0.3s",
+    },
+  })
+)<{ close?: boolean }>``;
+
 const PeopleCount = styled.span`
   margin-bottom: ${Sizings.MARGIN_1};
 `;
@@ -160,9 +169,10 @@ function Main() {
    * States for Manipulating the View
    * for Edit and Create People
    */
-  const [creatingEditing, setCreatingEditing] = useState(true);
+  const [creatingEditing, setCreatingEditing] = useState(false);
   const [action, setAction] = useState<"create" | "edit" | undefined>();
   const [editingId, setEditingId] = useState<string | undefined>();
+  const [loading, setLoading] = useState(false);
 
   /**
    * Inputs from Edit/Create View
@@ -171,25 +181,36 @@ function Main() {
   const [emailInput, setEmailInput] = useState("");
 
   useEffect(() => {
-    UserService.list()
+    PersonService.list()
       .then((people: Person[]) => setPeople(people))
       .catch((e: any) => {
         //alert("Erro ao carregar usuários");
       });
   }, []);
 
-  const openCreateView = () => {
-    setCreatingEditing(true);
-    setAction("create");
+  const toggleCreateView = () => {
+    if (action === "create") {
+      setAction(undefined);
+      setCreatingEditing(false);
+    } else {
+      setAction("create");
+      setCreatingEditing(true);
+    }
   };
 
-  const openEditView = (editingId: string) => {
-    setCreatingEditing(true);
-    setAction("edit");
-    setEditingId(editingId);
+  const toggleEditView = (editingId: string) => {
+    setAction(creatingEditing ? undefined : "edit");
+    setEditingId(creatingEditing ? undefined : "edit");
+    setCreatingEditing((lastState) => !lastState);
   };
 
-  const createPerson = () => {};
+  const createPerson = () => {
+    PersonService.create(nameInput, emailInput)
+      .then((insertedPerson: Person) => {
+        setPeople((people) => [...people, insertedPerson]);
+      })
+      .catch((e) => {});
+  };
 
   const editPerson = () => {};
 
@@ -224,10 +245,11 @@ function Main() {
         <Header>
           <Title>Amigo Secreto</Title>
           <HeaderButton withImage={Send} imageSize="15px" onClick={sendToAll} />
-          <HeaderButton
+          <HeaderAddButton
             withImage={Plus}
             imageSize="12px"
-            onClick={openCreateView}
+            onClick={toggleCreateView}
+            close={creatingEditing}
           />
         </Header>
         {creatingEditing && (
@@ -240,10 +262,11 @@ function Main() {
               <ColDivider />
               <Col style={{ flex: 1 }}>
                 <Label htmlFor="email">Email</Label>
-                <Input state={[emailInput, setNameInput]} id="email" />
+                <Input state={[emailInput, setEmailInput]} id="email" />
               </Col>
             </Row>
             <AddEditButton
+              disabled={loading}
               onClick={action === "edit" ? () => editPerson() : createPerson}
             >
               {action === "edit" ? "Editar" : "Adicionar"}

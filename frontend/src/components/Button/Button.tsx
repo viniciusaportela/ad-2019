@@ -1,5 +1,5 @@
 import React, { ComponentPropsWithoutRef } from "react";
-import { lighten } from "polished";
+import { darken, lighten } from "polished";
 import styled from "styled-components";
 
 import Colors from "../../styles/colors";
@@ -29,6 +29,10 @@ const ButtonComponent = styled.button`
   &:active {
     background-color: ${lighten(0.2, Colors.PRIMARY)};
   }
+
+  &disabled {
+    background-color: ${darken(0.1, Colors.PRIMARY)};
+  }
 `;
 
 const ButtonImage = styled.img<{ size: string }>`
@@ -49,18 +53,24 @@ const DEFAULT_IMAGE_SIZE = "20px";
 interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   withImage?: string;
   imageSize?: string;
+  styleImage?: Object;
 }
 
 const Button: React.FC<ButtonProps> = ({
   withImage,
   imageSize,
   children,
+  styleImage,
   ...props
 }) => {
   return (
     <ButtonComponent {...props}>
       {withImage && (
-        <ButtonImage src={withImage} size={imageSize || DEFAULT_IMAGE_SIZE} />
+        <ButtonImage
+          style={styleImage}
+          src={withImage}
+          size={imageSize || DEFAULT_IMAGE_SIZE}
+        />
       )}
       {children}
     </ButtonComponent>

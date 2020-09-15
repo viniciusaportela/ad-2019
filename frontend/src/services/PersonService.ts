@@ -1,4 +1,4 @@
-export default class UserService {
+export default class PersonService {
   static async list() {
     try {
       throw "a";
@@ -9,7 +9,15 @@ export default class UserService {
     }
   }
 
-  static async create() {}
+  static async create(name: string, email: string) {
+    try {
+      throw "a";
+
+      return { id: "asd", name: "a", email: "a" };
+    } catch (e) {
+      throw e;
+    }
+  }
 
   static async update() {}
 
