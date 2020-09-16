@@ -19,6 +19,7 @@ import PersonService from "../../services/PersonService";
 
 import isPair from "../../utils/isPair";
 import treatApiError from "../../utils/treatApiError";
+import { ErrorCodes } from "../../constants/enums";
 
 /**
  * =================
@@ -206,12 +207,34 @@ function Main() {
     setCreatingEditing((lastState) => !lastState);
   };
 
-  const createPerson = () => {
-    PersonService.create(nameInput, emailInput)
-      .then((insertedPerson: Person) => {
-        setPeople((people) => [...people, insertedPerson]);
-      })
-      .catch((e) => {});
+  const addPerson = async () => {
+    if (!nameInput.trim() || !emailInput.trim()) return;
+
+    try {
+      const inserted = await PersonService.create(nameInput, emailInput);
+
+      setPeople((people) => [...people, inserted]);
+      setNameInput("");
+      setEmailInput("");
+    } catch (err) {
+      treatApiError(err, {
+        apiError: (body) => {
+          switch (body.error) {
+            case ErrorCodes.INVALID_EMAIL:
+              alert("Email inválido");
+              break;
+            case ErrorCodes.ALREADY_EXISTS:
+              alert("Esse email já foi cadastrado");
+              break;
+            default:
+              alert("Erro no servidor ao criar");
+          }
+        },
+        clientError: () => {
+          alert("Erro ao criar");
+        },
+      });
+    }
   };
 
   const editPerson = () => {};
@@ -269,7 +292,7 @@ function Main() {
             </Row>
             <AddEditButton
               disabled={loading}
-              onClick={action === "edit" ? () => editPerson() : createPerson}
+              onClick={action === "edit" ? () => editPerson() : addPerson}
             >
               {action === "edit" ? "Editar" : "Adicionar"}
             </AddEditButton>
