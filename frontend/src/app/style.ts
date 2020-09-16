@@ -133,8 +133,12 @@ export const AddEditButton = styled(Button)`
   padding: 0.7rem 2.5rem;
 `;
 
-export const Row = styled.div`
+export const ResponsiveRow = styled.div`
   flex-direction: row;
+
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 export const Col = styled.div``;

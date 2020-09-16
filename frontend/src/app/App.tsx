@@ -22,7 +22,7 @@ import {
   HeaderButton,
   HeaderAddButton,
   InputContainer,
-  Row,
+  ResponsiveRow,
   Col,
   Label,
   ColDivider,
@@ -301,7 +301,7 @@ function App() {
         </Header>
         {creatingEditing && (
           <InputContainer>
-            <Row>
+            <ResponsiveRow>
               <Col style={{ flex: 1 }}>
                 <Label htmlFor="name">Nome</Label>
                 <Input state={[nameInput, setNameInput]} id="name" />
@@ -311,7 +311,7 @@ function App() {
                 <Label htmlFor="email">Email</Label>
                 <Input state={[emailInput, setEmailInput]} id="email" />
               </Col>
-            </Row>
+            </ResponsiveRow>
             <AddEditButton
               disabled={loading}
               onClick={action === "edit" ? () => editPerson() : addPerson}
