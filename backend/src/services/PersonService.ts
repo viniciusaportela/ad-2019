@@ -18,6 +18,12 @@ export default class PersonService {
   }
 
   static async update(personId: string, name: string, email: string) {
+    const alreadyHas = await PersonModel.findOne({ email });
+
+    if (alreadyHas && alreadyHas._id.toString() !== personId) {
+      throw new AlreadyExistsError();
+    }
+
     const affected = await PersonModel.updateOne(
       { _id: personId },
       { name, email }
