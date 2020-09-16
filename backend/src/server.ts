@@ -28,7 +28,7 @@ mongoose
     const app = express();
 
     app.use(bodyParser.json());
-    app.use(cors());
+    app.use(cors({ origin: true }));
 
     app.use("/v1", Routes);
 
