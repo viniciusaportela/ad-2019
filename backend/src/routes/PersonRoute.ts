@@ -23,6 +23,8 @@ router.put(
   PersonController.update
 );
 
+router.delete("/all", PersonController.deleteAll);
+
 router.delete("/:person", PersonController.delete);
 
 export default router;

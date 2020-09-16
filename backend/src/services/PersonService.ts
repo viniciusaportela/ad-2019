@@ -102,11 +102,11 @@ export default class PersonService {
         Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
       const secondPerson = users[secondPersonIndex];
 
-      await PersonModel.update(
+      await PersonModel.updateOne(
         { _id: firstPerson._id },
         { friend: secondPerson }
       );
-      await PersonModel.update(
+      await PersonModel.updateOne(
         { _id: secondPerson._id },
         { friend: firstPerson }
       );

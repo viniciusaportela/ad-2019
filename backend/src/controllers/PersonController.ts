@@ -65,6 +65,15 @@ export default class PersonController {
     }
   }
 
+  static async deleteAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      await UserService.deleteAll();
+      res.sendStatus(200);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   static async sendToAll(req: Request, res: Response, next: NextFunction) {
     try {
       const usersOrdered = await UserService.createFriendRelationsAndReturn();

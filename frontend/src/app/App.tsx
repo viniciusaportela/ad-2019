@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Input from "../components/Input";
 
 import Send from "../assets/images/send.png";
+import DeleteWhite from "../assets/images/delete_white.png";
 import Plus from "../assets/images/plus.png";
 
 import PersonService from "../services/PersonService";
@@ -98,6 +99,18 @@ function App() {
     setEmailInput(editingPerson.email);
 
     setCreatingEditing(true);
+  };
+
+  /**
+   * Delete all registered people from database
+   */
+  const deleteAll = async () => {
+    try {
+      await PersonService.deleteAll();
+      setPeople([]);
+    } catch (e) {
+      alert("Erro ao deletar");
+    }
   };
 
   /**
@@ -229,7 +242,7 @@ function App() {
     try {
       await PersonService.sendToAll();
 
-      setPeople([]);
+      alert("Todos receberam seus amigos secretos, divirtam-se!");
       _clearInputs();
       _resetCreateEditState();
     } catch (err) {
@@ -291,6 +304,11 @@ function App() {
       <MainCard>
         <Header>
           <Title>Amigo Secreto</Title>
+          <HeaderButton
+            withImage={DeleteWhite}
+            imageSize="15px"
+            onClick={deleteAll}
+          />
           <HeaderButton withImage={Send} imageSize="15px" onClick={sendToAll} />
           <HeaderAddButton
             withImage={Plus}

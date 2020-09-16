@@ -1,6 +1,8 @@
 import axios from "axios";
 import { API_SERVER } from "../constants";
 
+const axiosInstance = axios.create({ baseURL: API_SERVER });
+
 /**
  * @class
  * Manipulates the actions with Person entity
@@ -10,7 +12,7 @@ export default class PersonService {
    * Get a list of all registered people
    */
   static async list() {
-    const res = await axios.get<Person[]>(`${API_SERVER}/v1/people/`);
+    const res = await axiosInstance.get<Person[]>(`/v1/people/`);
     return res.data;
   }
 
@@ -25,7 +27,7 @@ export default class PersonService {
   static async create(name: string, email: string): Promise<Person>;
   static async create(...args: string[]): Promise<Person>;
   static async create(name: string, email: string) {
-    const res = await axios.post<Person>(`${API_SERVER}/v1/people/`, {
+    const res = await axiosInstance.post<Person>(`/v1/people/`, {
       name,
       email,
     });
@@ -46,7 +48,7 @@ export default class PersonService {
   ): Promise<void>;
   static async update(...args: string[]): Promise<void>;
   static async update(personId: string, name: string, email: string) {
-    await axios.put<Person>(`${API_SERVER}/v1/people/${personId}`, {
+    await axiosInstance.put<Person>(`/v1/people/${personId}`, {
       name,
       email,
     });
@@ -58,7 +60,14 @@ export default class PersonService {
    * @param personId The person ID to edit
    */
   static async delete(personId: string) {
-    await axios.delete(`${API_SERVER}/v1/people/${personId}`);
+    await axiosInstance.delete(`/v1/people/${personId}`);
+  }
+
+  /**
+   * Delete all registered people from database
+   */
+  static async deleteAll() {
+    await axiosInstance.delete(`/v1/people/all`);
   }
 
   /**
@@ -66,6 +75,6 @@ export default class PersonService {
    * the registered people in database after successfully sent all emails
    */
   static async sendToAll() {
-    await axios.post(`${API_SERVER}/v1/people/send-to-all`);
+    await axiosInstance.post(`/v1/people/send-to-all`);
   }
 }
