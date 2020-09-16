@@ -7,7 +7,7 @@ const Card = styled.div`
   -moz-box-shadow: 0px 3px 40px -1px rgba(107, 107, 107, 0.38);
   box-shadow: 0px 3px 40px -1px rgba(107, 107, 107, 0.38);
 
-  padding: 1.3rem;
+  padding: 1rem;
   border-radius: 5px;
 `;
 

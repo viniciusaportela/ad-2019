@@ -95,7 +95,7 @@ const HeaderButton = styled(Button)`
   width: 40px;
   height: 40px;
 
-  margin: 0 1rem;
+  margin: 0 0.3rem;
 `;
 
 const HeaderAddButton = styled(HeaderButton).attrs(
@@ -116,8 +116,8 @@ const InputContainer = styled.div`
 
   border-radius: 5px;
 
-  padding: 0.5rem;
-  margin-top: 1rem;
+  padding: 0.7rem;
+  margin-top: 0.7rem;
   margin-bottom: 1.3rem;
 `;
 
@@ -139,9 +139,9 @@ const LineEdit = styled(IconButton).attrs({ withImage: Edit })``;
 const LineDelete = styled(IconButton).attrs({ withImage: Delete })``;
 
 const AddEditButton = styled(Button)`
-  margin-top: 1rem;
+  margin-top: 0.2rem;
   margin-left: auto;
-  padding: 0.6rem 2rem;
+  padding: 0.7rem 2.5rem;
 `;
 
 const Row = styled.div`

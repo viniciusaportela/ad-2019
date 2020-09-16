@@ -10,7 +10,7 @@ const InputComponent = styled.input`
   border: none;
   background-color: white;
 
-  padding: 1rem;
+  padding: 0.8rem;
   border-radius: 5px;
   margin: 0.7rem 0;
 `;
