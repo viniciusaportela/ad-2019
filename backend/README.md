@@ -1,5 +1,17 @@
 # Back-End
 
+# Instruções
+
+Crie um arquivo `.env` e adicione as configurações neste, use o arquivo `.env.example` como base. Utilizei o Gmail para o envio de emails, logo, se for também utilizar o Gmail para enviar mensagens, **você deve antes permitir acesso a app menos seguros:**
+
+> https://myaccount.google.com/lesssecureapps?pli=1
+
+Instale as dependências e rode o servidor usando o comando:
+
+> npm run start
+
+# Estrutura de Arquivos
+
 O Back-End segue a seguinte estrutura de arquivos:
 
 ## Config
@@ -37,3 +49,5 @@ Também tratam os `slugs`
 ## Services
 
 Manipulação direta com o banco de dados
+
+# API Reference
