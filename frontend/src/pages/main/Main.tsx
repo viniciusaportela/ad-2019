@@ -16,10 +16,10 @@ import Edit from "../../assets/images/edit.png";
 import Delete from "../../assets/images/delete.png";
 
 import PersonService from "../../services/PersonService";
+import { ErrorCodes } from "../../constants/enums";
 
 import isPair from "../../utils/isPair";
 import treatApiError from "../../utils/treatApiError";
-import { ErrorCodes } from "../../constants/enums";
 
 /**
  * =================
@@ -186,7 +186,7 @@ function Main() {
   useEffect(() => {
     PersonService.list()
       .then((people: Person[]) => setPeople(people))
-      .catch((err: any) => {
+      .catch(() => {
         alert("Erro ao pegar lista de pessoas");
       });
   }, []);
@@ -218,8 +218,8 @@ function Main() {
       setEmailInput("");
     } catch (err) {
       treatApiError(err, {
-        apiError: (body) => {
-          switch (body.error) {
+        apiError: ({ error }) => {
+          switch (error) {
             case ErrorCodes.INVALID_EMAIL:
               alert("Email inválido");
               break;
@@ -239,7 +239,14 @@ function Main() {
 
   const editPerson = () => {};
 
-  const deletePerson = (id: string) => {};
+  const deletePerson = async (id: string) => {
+    try {
+      await PersonService.delete(id);
+      setPeople((people) => people.filter((person) => person._id !== id));
+    } catch (err) {
+      alert("Erro ao deletar");
+    }
+  };
 
   const sendToAll = () => {};
 
@@ -304,7 +311,7 @@ function Main() {
           <Line strip={isPair(index)}>
             <LineText>{person.name}</LineText>
             <LineEdit />
-            <LineDelete />
+            <LineDelete onClick={() => deletePerson(person._id)} />
           </Line>
         ))}
       </MainCard>
