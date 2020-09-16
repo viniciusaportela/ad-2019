@@ -20,7 +20,20 @@ interface InputProps extends ComponentPropsWithoutRef<"input"> {
 }
 
 const Input: React.FC<InputProps> = ({ state, ...props }) => {
-  return <InputComponent {...props}></InputComponent>;
+  const input = state[0];
+  const setInput = state[1];
+
+  const onInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(ev.target.value);
+  };
+
+  return (
+    <InputComponent
+      {...props}
+      value={input}
+      onChange={onInputChange}
+    ></InputComponent>
+  );
 };
 
 export default Input;
