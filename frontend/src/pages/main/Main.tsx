@@ -17,6 +17,9 @@ import Delete from "../../assets/images/delete.png";
 
 import PersonService from "../../services/PersonService";
 
+import isPair from "../../utils/isPair";
+import treatApiError from "../../utils/treatApiError";
+
 /**
  * =================
  * Styled Components
@@ -182,8 +185,8 @@ function Main() {
   useEffect(() => {
     PersonService.list()
       .then((people: Person[]) => setPeople(people))
-      .catch((e: any) => {
-        //alert("Erro ao carregar usuários");
+      .catch((err: any) => {
+        alert("Erro ao pegar lista de pessoas");
       });
   }, []);
 
@@ -274,11 +277,13 @@ function Main() {
         )}
 
         <PeopleCount>{people.length} Pessoas</PeopleCount>
-        <Line strip={true}>
-          <LineText>Vinícius de Araújo Portela</LineText>
-          <LineEdit />
-          <LineDelete />
-        </Line>
+        {people.map((person, index) => (
+          <Line strip={isPair(index)}>
+            <LineText>{person.name}</LineText>
+            <LineEdit />
+            <LineDelete />
+          </Line>
+        ))}
       </MainCard>
     </Container>
   );
