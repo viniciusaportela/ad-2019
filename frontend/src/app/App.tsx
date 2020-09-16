@@ -63,6 +63,15 @@ function App() {
       });
   }, []);
 
+  /**
+   * Toggle the current create / edit view
+   *
+   * If it's not open, then open it as create view
+   *
+   * If it's already open, then close it
+   *
+   * *If it was open in edit mode, then clear the inputs*
+   */
   const toggleCreateView = () => {
     if (action === undefined) {
       setAction("create");
@@ -76,6 +85,11 @@ function App() {
     }
   };
 
+  /**
+   * Start editing a person (set editingId and set inputs)
+   *
+   * @param editingPerson the person entity who is going to be edited
+   */
   const openEditView = (editingPerson: Person) => {
     setAction("edit");
     setEditingId(editingPerson._id);
@@ -86,10 +100,15 @@ function App() {
     setCreatingEditing(true);
   };
 
+  /**
+   * Add a person to database
+   *
+   * Uses the `nameInput` and `emailInput`, and call savePerson
+   */
   const addPerson = async () => {
     setLoading(true);
 
-    const inserted = await insertPerson("create", {
+    const inserted = await savePerson("create", {
       name: nameInput,
       email: emailInput,
     });
@@ -102,10 +121,16 @@ function App() {
     setLoading(false);
   };
 
+  /**
+   * Edit certain person data
+   *
+   * It gets the `editingId` state to determine who is being
+   * edited
+   */
   const editPerson = async () => {
     setLoading(true);
 
-    const res = await insertPerson("update", {
+    const res = await savePerson("update", {
       name: nameInput,
       email: emailInput,
       personId: editingId,
@@ -129,7 +154,14 @@ function App() {
     setLoading(false);
   };
 
-  const insertPerson = async (
+  /**
+   * Save certain person data (create or edit)
+   *
+   * @param method - If it's creating or editing
+   * @param input - `name`, `edit` and if is editing the `id` of
+   * the person being edited
+   */
+  const savePerson = async (
     method: "create" | "update",
     input: {
       name: string;
@@ -170,6 +202,11 @@ function App() {
     }
   };
 
+  /**
+   * Delete a certain person from database
+   *
+   * @param id Person database ID
+   */
   const deletePerson = async (id: string) => {
     try {
       await PersonService.delete(id);
@@ -184,6 +221,10 @@ function App() {
     }
   };
 
+  /**
+   * Send a email to all registered people
+   * with him secret friend
+   */
   const sendToAll = async () => {
     try {
       await PersonService.sendToAll();
@@ -207,11 +248,17 @@ function App() {
     }
   };
 
+  /**
+   * Clear all create / edit inputs
+   */
   const _clearInputs = () => {
     setNameInput("");
     setEmailInput("");
   };
 
+  /**
+   * Reset all states that handle the create / edit view
+   */
   const _resetCreateEditState = () => {
     setAction(undefined);
     setCreatingEditing(false);
