@@ -1,15 +1,15 @@
 import { lighten, linearGradient, transparentize } from "polished";
 import styled from "styled-components";
 
-import Card from "../../components/Card";
-import Button from "../../components/Button";
-import IconButton from "../../components/IconButton";
+import Card from "../components/Card";
+import Button from "../components/Button";
+import IconButton from "../components/IconButton";
 
-import Colors from "../../styles/colors";
+import Colors from "../styles/colors";
 
-import Gift from "../../assets/images/gift.png";
-import Edit from "../../assets/images/edit.png";
-import Delete from "../../assets/images/delete.png";
+import Gift from "../assets/images/gift.png";
+import Edit from "../assets/images/edit.png";
+import Delete from "../assets/images/delete.png";
 
 export const Container = styled.div``;
 

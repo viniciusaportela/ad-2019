@@ -2,11 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./global.css";
 
-import Main from "./pages/main";
+import App from "./app";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Main />
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 
-import Input from "../../components/Input";
+import Input from "../components/Input";
 
-import Send from "../../assets/images/send.png";
-import Plus from "../../assets/images/plus.png";
+import Send from "../assets/images/send.png";
+import Plus from "../assets/images/plus.png";
 
-import PersonService from "../../services/PersonService";
-import { ErrorCodes } from "../../constants/enums";
+import PersonService from "../services/PersonService";
+import { ErrorCodes } from "../constants/enums";
 
-import isPair from "../../utils/isPair";
-import treatApiError from "../../utils/treatApiError";
+import isPair from "../utils/isPair";
+import treatApiError from "../utils/treatApiError";
 import {
   Container,
   Background,
@@ -34,7 +34,7 @@ import {
   LineDelete,
 } from "./style";
 
-function Main() {
+function App() {
   /**
    * People List State
    */
@@ -258,4 +258,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default App;
