@@ -1,3 +1,18 @@
+/**
+ * List of custom error codes
+ * from API server
+ *
+ * Found in field: `error` of a response
+ *
+ * example:
+ * ```json
+ * {
+ *  "field": "name",
+ *  "error": "missing_field",
+ *  "code": 422
+ * }
+ * ```
+ */
 enum ErrorCodes {
   MISSING_FIELD = "missing_field",
   SHOULD_BE_STRING = "should_be_string",
@@ -8,6 +23,9 @@ enum ErrorCodes {
   INVALID_USERS_LENGTH = "invalid_users_length",
 }
 
+/**
+ * Model of Database Person
+ */
 declare interface Person {
   _id: string;
   name: string;
@@ -15,6 +33,10 @@ declare interface Person {
   friend?: string;
 }
 
+/**
+ * Default format of API Response in
+ * error requests
+ */
 declare interface ApiErrorBody {
   error: ErrorCodes;
   description?: string;
