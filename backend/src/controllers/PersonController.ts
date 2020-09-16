@@ -111,6 +111,7 @@ export default class PersonController {
 
       res.sendStatus(200);
     } catch (e) {
+      console.log(e);
       next(e);
     }
   }

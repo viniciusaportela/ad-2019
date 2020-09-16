@@ -20,6 +20,8 @@ export default async function handleErrors(
   res: Response,
   next: NextFunction
 ) {
+  console.log(err);
+
   res.status(err.statusCode || 500).json(
     err instanceof HttpError
       ? {
