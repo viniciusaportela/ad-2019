@@ -34,6 +34,21 @@ export default {
   gmailPassword: process.env.GMAIL_PASSWORD,
 
   /**
+   * MainGun Private Api Key
+   */
+  mailgunApiKey: process.env.MAILGUN_API_KEY,
+
+  /**
+   * MainGun Domain
+   */
+  mailgunDomain: process.env.MAILGUN_DOMAIN,
+
+  /**
+   * MainGun Private Api Key
+   */
+  mailgunSenderEmail: process.env.MAILGUN_SENDER_EMAIL,
+
+  /**
    * Api port to listen
    */
   port: process.env.PORT || 8080,
