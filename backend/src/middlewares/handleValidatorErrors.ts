@@ -3,6 +3,10 @@ import { validationResult } from "express-validator";
 
 import { ValidationError } from "../constants/Errors";
 
+/**
+ * Check if the validator founds any invalid input. If found any
+ * error on inputs pass a **ValidationError** to next middleware
+ */
 export default function handleValidatorErrors(
   req: Request,
   res: Response,

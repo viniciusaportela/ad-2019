@@ -1,3 +1,18 @@
+/**
+ * List of custom error codes
+ * from API server
+ *
+ * Found in field: `error` of a response
+ *
+ * example:
+ * ```json
+ * {
+ *  "field": "name",
+ *  "error": "missing_field",
+ *  "code": 422
+ * }
+ * ```
+ */
 export enum ErrorCodes {
   MISSING_FIELD = "missing_field",
   SHOULD_BE_STRING = "should_be_string",
@@ -8,6 +23,10 @@ export enum ErrorCodes {
   INVALID_USERS_LENGTH = "invalid_users_length",
 }
 
+/**
+ * Error used when the server founds a error and need to
+ * return it to user
+ */
 export class HttpError extends Error {
   public statusCode: number;
   public errorCode: ErrorCodes;
@@ -23,6 +42,9 @@ export class HttpError extends Error {
   }
 }
 
+/**
+ * A resource was not found
+ */
 export class NotFoundError extends HttpError {
   constructor() {
     super();
@@ -34,6 +56,10 @@ export class NotFoundError extends HttpError {
   }
 }
 
+/**
+ * This error is throw when **there no person** to sent a email, or a
+ * **odd number of people**
+ */
 export class InvalidUsersLength extends HttpError {
   constructor(description?: string) {
     super();
@@ -46,6 +72,9 @@ export class InvalidUsersLength extends HttpError {
   }
 }
 
+/**
+ * A resource already exists in database
+ */
 export class AlreadyExistsError extends HttpError {
   constructor() {
     super();
@@ -57,6 +86,9 @@ export class AlreadyExistsError extends HttpError {
   }
 }
 
+/**
+ * The given inputs are invalid (body, query, params)
+ */
 export class ValidationError extends HttpError {
   public field: string;
 
