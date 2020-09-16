@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 const PersonModel = new Schema(
   {
@@ -15,4 +15,9 @@ const PersonModel = new Schema(
   { timestamps: true }
 );
 
-export default model("Person", PersonModel);
+export interface IPerson extends mongoose.Document {
+  name: string;
+  email: string;
+}
+
+export default model<IPerson>("Person", PersonModel);

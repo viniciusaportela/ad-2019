@@ -14,6 +14,8 @@ router.post(
   PersonController.create
 );
 
+router.post("/send-to-all", PersonController.sendToAll);
+
 router.put(
   "/:person",
   PersonController.insertValidator,

@@ -36,5 +36,7 @@ export default class PersonService {
     }
   }
 
-  static async sendToAll() {}
+  static async deleteAll() {
+    await PersonModel.deleteMany({});
+  }
 }

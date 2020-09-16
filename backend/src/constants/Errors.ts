@@ -5,6 +5,7 @@ export enum ErrorCodes {
   NOT_FOUND = "not_found",
   ALREADY_EXISTS = "already_exists",
   INTERNAL_ERROR = "internal_error",
+  INVALID_USERS_LENGTH = "invalid_users_length",
 }
 
 export class HttpError extends Error {
@@ -30,6 +31,18 @@ export class NotFoundError extends HttpError {
     this.errorCode = ErrorCodes.NOT_FOUND;
 
     Object.setPrototypeOf(this, NotFoundError.prototype);
+  }
+}
+
+export class InvalidUsersLength extends HttpError {
+  constructor(description?: string) {
+    super();
+    this.name = "InvalidUsersLength";
+    this.statusCode = 422;
+    this.errorCode = ErrorCodes.INVALID_USERS_LENGTH;
+    this.description = description;
+
+    Object.setPrototypeOf(this, InvalidUsersLength.prototype);
   }
 }
 
