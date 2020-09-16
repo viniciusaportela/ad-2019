@@ -1,4 +1,8 @@
-import { AlreadyExistsError, NotFoundError } from "../constants/Errors";
+import {
+  AlreadyExistsError,
+  InvalidUsersLength,
+  NotFoundError,
+} from "../constants/Errors";
 import PersonModel from "../database/model/PersonModel";
 
 /**
@@ -10,7 +14,7 @@ export default class PersonService {
    * Get a list of people registered on database
    */
   static async list() {
-    return await PersonModel.find();
+    return await PersonModel.find().populate("friend").exec();
   }
 
   /**
@@ -72,5 +76,52 @@ export default class PersonService {
    */
   static async deleteAll() {
     await PersonModel.deleteMany({});
+  }
+
+  static async createFriendRelationsAndReturn() {
+    const users = await PersonService.list();
+
+    if (users.length === 0) {
+      throw new InvalidUsersLength(
+        "There should be at least 2 users registered to start"
+      );
+    } else if (users.length % 2 !== 0) {
+      throw new InvalidUsersLength("The user count must be pair");
+    }
+
+    const returnArr = [];
+
+    while (users.length >= 2) {
+      const firstPerson = users[0];
+
+      // Random Second Person
+      const maximum = users.length - 1;
+      const minimum = 1;
+
+      const secondPersonIndex =
+        Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+      const secondPerson = users[secondPersonIndex];
+
+      await PersonModel.update(
+        { _id: firstPerson._id },
+        { friend: secondPerson }
+      );
+      await PersonModel.update(
+        { _id: secondPerson._id },
+        { friend: firstPerson }
+      );
+
+      returnArr.push(firstPerson);
+      returnArr.push(secondPerson);
+
+      users.splice(secondPersonIndex, 1);
+      users.splice(0, 1);
+    }
+
+    return returnArr;
+  }
+
+  static async createFriendRelations() {
+    await PersonService.createFriendRelationsAndReturn();
   }
 }

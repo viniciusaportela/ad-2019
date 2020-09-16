@@ -11,6 +11,10 @@ const PersonModel = new Schema(
       require: true,
       unique: true,
     },
+    friend: {
+      type: Schema.Types.ObjectId,
+      ref: "Person",
+    },
   },
   { timestamps: true }
 );
@@ -18,6 +22,7 @@ const PersonModel = new Schema(
 export interface IPerson extends mongoose.Document {
   name: string;
   email: string;
+  friend?: IPerson;
 }
 
 export default model<IPerson>("Person", PersonModel);

@@ -67,27 +67,12 @@ export default class PersonController {
 
   static async sendToAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const users = await UserService.list();
+      const usersOrdered = await UserService.createFriendRelationsAndReturn();
 
-      if (users.length === 0) {
-        throw new InvalidUsersLength(
-          "There should be at least 2 users registered to start"
-        );
-      } else if (users.length % 2 !== 0) {
-        throw new InvalidUsersLength("The user count must be pair");
-      }
-
-      const emailList: EmailForm[] = [];
-      while (users.length >= 2) {
-        const firstPerson = users[0];
-
-        // Random Second Person
-        const maximum = users.length - 1;
-        const minimum = 1;
-
-        const secondPersonIndex =
-          Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-        const secondPerson = users[secondPersonIndex];
+      const emailList = [];
+      for (let i = 0; i < usersOrdered.length; i += 2) {
+        const firstPerson = usersOrdered[i];
+        const secondPerson = usersOrdered[i + 1];
 
         emailList.push({
           to: firstPerson.email,
@@ -100,14 +85,9 @@ export default class PersonController {
           subject: "Amigo Secreto",
           text: `Seu amigo secreto é: ${firstPerson.name}`,
         });
-
-        users.splice(secondPersonIndex, 1);
-        users.splice(0, 1);
       }
 
       await MailService.send(emailList);
-
-      await PersonService.deleteAll();
 
       res.sendStatus(200);
     } catch (e) {
