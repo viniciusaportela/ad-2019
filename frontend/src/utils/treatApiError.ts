@@ -1,11 +1,13 @@
 export default function treatApiError(
   err: any,
-  isHttpErrorCallback: (body: ApiErrorBody) => void,
-  isNotHttpErrorCallback: (err: any) => void
+  callbacks: {
+    apiError?: (body: ApiErrorBody) => void;
+    clientError?: (err: any) => void;
+  }
 ) {
   if (err.response) {
-    isHttpErrorCallback(err.response.body);
+    callbacks.apiError && callbacks.apiError(err.response.data);
   } else {
-    isNotHttpErrorCallback(err);
+    callbacks.clientError && callbacks.clientError(err);
   }
 }
