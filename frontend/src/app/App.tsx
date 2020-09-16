@@ -87,6 +87,8 @@ function App() {
   };
 
   const addPerson = async () => {
+    setLoading(true);
+
     const inserted = await insertPerson("create", {
       name: nameInput,
       email: emailInput,
@@ -96,9 +98,13 @@ function App() {
       setPeople((people) => [...people, inserted]);
       _clearInputs();
     }
+
+    setLoading(false);
   };
 
   const editPerson = async () => {
+    setLoading(true);
+
     const res = await insertPerson("update", {
       name: nameInput,
       email: emailInput,
@@ -119,6 +125,8 @@ function App() {
       _clearInputs();
       _resetCreateEditState();
     }
+
+    setLoading(false);
   };
 
   const insertPerson = async (
@@ -129,7 +137,7 @@ function App() {
       personId?: string;
     }
   ) => {
-    if (!nameInput.trim() || !emailInput.trim()) return;
+    if (!input.name.trim() || !input.email.trim()) return;
 
     try {
       return await PersonService[method](
@@ -240,7 +248,13 @@ function App() {
               disabled={loading}
               onClick={action === "edit" ? () => editPerson() : addPerson}
             >
-              {action === "edit" ? "Editar" : "Adicionar"}
+              {action === "edit"
+                ? loading
+                  ? "Editando..."
+                  : "Editar"
+                : loading
+                ? "Adicionando..."
+                : "Adicionar"}
             </AddEditButton>
           </InputContainer>
         )}
