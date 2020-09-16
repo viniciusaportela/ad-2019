@@ -3,7 +3,6 @@ import { darken, lighten } from "polished";
 import styled from "styled-components";
 
 import Colors from "../../styles/colors";
-import Sizings from "../../styles/sizings";
 
 const ButtonComponent = styled.button`
   background-color: ${Colors.PRIMARY};
@@ -19,8 +18,8 @@ const ButtonComponent = styled.button`
   justify-content: center;
   align-items: center;
 
-  padding: ${Sizings.PADDING_2};
-  border-radius: ${Sizings.BORDER_RADIUS};
+  padding: 1rem;
+  border-radius: 5px;
 
   &:hover {
     background-color: ${lighten(0.06, Colors.PRIMARY)};

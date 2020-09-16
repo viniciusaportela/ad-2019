@@ -7,7 +7,6 @@ import Button from "../../components/Button";
 import IconButton from "../../components/IconButton";
 import Input from "../../components/Input";
 
-import Sizings from "../../styles/sizings";
 import Colors from "../../styles/colors";
 
 import Gift from "../../assets/images/gift.png";
@@ -28,7 +27,7 @@ const Container = styled.div``;
 const Background = styled.div`
   width: 100%;
   height: 200px;
-  padding: ${Sizings.PADDING_2};
+  padding: 1rem;
 
   background-color: ${linearGradient({
     colorStops: [Colors.PRIMARY, lighten(0.05, Colors.PRIMARY)],
@@ -59,7 +58,7 @@ const Logo = styled.img.attrs({ src: Gift })`
 `;
 
 const LogoText = styled.span`
-  margin-left: ${Sizings.MARGIN_2};
+  margin-left: 1rem;
   color: ${Colors.LIGHT};
 
   user-drag: none;
@@ -82,7 +81,7 @@ const MainCard = styled(Card)`
 `;
 
 const Title = styled.h1`
-  font-size: ${Sizings.FONT_3};
+  font-size: 1.3rem;
   font-weight: 600;
 
   margin-right: auto;
@@ -96,7 +95,7 @@ const HeaderButton = styled(Button)`
   width: 40px;
   height: 40px;
 
-  margin: 0 ${Sizings.MARGIN_1};
+  margin: 0 1rem;
 `;
 
 const HeaderAddButton = styled(HeaderButton).attrs(
@@ -109,23 +108,23 @@ const HeaderAddButton = styled(HeaderButton).attrs(
 )<{ close?: boolean }>``;
 
 const PeopleCount = styled.span`
-  margin-bottom: ${Sizings.MARGIN_1};
+  margin-bottom: 1rem;
 `;
 
 const InputContainer = styled.div`
   background-color: ${Colors.GRAY_1};
 
-  border-radius: ${Sizings.BORDER_RADIUS};
+  border-radius: 5px;
 
-  padding: ${Sizings.PADDING_2};
-  margin-top: ${Sizings.MARGIN_1};
-  margin-bottom: ${Sizings.MARGIN_3};
+  padding: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1.3rem;
 `;
 
 const Line = styled.div<{ strip?: boolean }>`
   background-color: ${({ strip }) => (strip ? Colors.GRAY_1 : "transparent")};
 
-  padding: ${Sizings.PADDING_1};
+  padding: 0.5rem;
 
   flex-direction: row;
   align-items: center;
@@ -140,9 +139,9 @@ const LineEdit = styled(IconButton).attrs({ withImage: Edit })``;
 const LineDelete = styled(IconButton).attrs({ withImage: Delete })``;
 
 const AddEditButton = styled(Button)`
-  margin-top: ${Sizings.MARGIN_2};
+  margin-top: 1rem;
   margin-left: auto;
-  padding: ${Sizings.PADDING_2} ${Sizings.PADDING_5};
+  padding: 0.6rem 2rem;
 `;
 
 const Row = styled.div`
