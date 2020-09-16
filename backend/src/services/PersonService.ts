@@ -83,10 +83,6 @@ export default class PersonService {
    *
    * @returns The people list ordered in pairs of people with
    * their secret friend
-   *
-   * Example:
-   * [{_id: 1, name: 'Jose'}], [{_id: 2, name: 'João'}]
-   *
    */
   static async createFriendRelationsAndReturn() {
     const users = await PersonService.list();
