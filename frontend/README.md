@@ -2,6 +2,20 @@
 
 O Front-end foi construido usando ReactJS em Typescript e algumas bibliotecas para auxiliar no desenvolvimento
 
+# Instruções
+
+Se você quiser usar o servidor em NodeJS para hospedar o project em ReactJS (recomendado), rode:
+
+> npm run build
+
+> npm run serve
+
+Se você quiser apenas os arquivos estáticos do ReactJS, apenas rode:
+
+> npm run build
+
+e use a pasta build/
+
 ## Bibliotecas Utilizadas
 
 ### Axios

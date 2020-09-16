@@ -10,7 +10,7 @@ As instruções específicas de cada parte (front e back) estão localizados no 
 
 # Heroku Deploy
 
-O deploy para o heroku é **completamente opcional** (inclusive se for testar / avaliar, recomendo até que siga as instruções de cada sub-projeto invés de realizar o deploy no heroku)
+O deploy para o heroku é **completamente opcional** (inclusive se for testar / avaliar, recomendo que siga as instruções de cada sub-projeto invés de realizar o deploy no heroku)
 
 Os projetos front e back foram feitos para trabalharem individualmente usando a forma de deploy que for mais conveniente, para realizar o deploy para o heroku realize as seguintes instruções:
 
@@ -58,3 +58,13 @@ PORT=8080 # NÃO INSIRA ESSE
 Realize o deploy:
 
 `git subtree push --prefix backend/ backend master`
+
+## 3. Deploy Frontend
+
+Insira a seguinte variável de ambiente do frontend (pode ser pelo Heroku Dashboard também):
+
+`heroku config:set REACT_APP_API_SERVER=http://apiserveraddres --remote frontend`
+
+Realize o deploy:
+
+`git subtree push --prefix frontend/ frontend master`
