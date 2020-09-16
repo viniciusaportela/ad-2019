@@ -192,30 +192,81 @@ function Main() {
   }, []);
 
   const toggleCreateView = () => {
-    if (action === "create") {
-      setAction(undefined);
-      setCreatingEditing(false);
-    } else {
+    if (action === undefined) {
       setAction("create");
       setCreatingEditing(true);
+    } else {
+      if (action === "edit") {
+        _clearInputs();
+      }
+
+      _resetCreateEditState();
     }
   };
 
-  const toggleEditView = (editingId: string) => {
-    setAction(creatingEditing ? undefined : "edit");
-    setEditingId(creatingEditing ? undefined : "edit");
-    setCreatingEditing((lastState) => !lastState);
+  const openEditView = (editingPerson: Person) => {
+    setAction("edit");
+    setEditingId(editingPerson._id);
+
+    setNameInput(editingPerson.name);
+    setEmailInput(editingPerson.email);
+
+    setCreatingEditing(true);
   };
 
   const addPerson = async () => {
+    const inserted = await insertPerson("create", {
+      name: nameInput,
+      email: emailInput,
+    });
+
+    if (inserted) {
+      setPeople((people) => [...people, inserted]);
+      _clearInputs();
+    }
+  };
+
+  const editPerson = async () => {
+    const res = await insertPerson("update", {
+      name: nameInput,
+      email: emailInput,
+      personId: editingId,
+    });
+
+    if (res !== false) {
+      setPeople((people) =>
+        people.map((person) => {
+          if (person._id === editingId) {
+            return { ...person, name: nameInput, email: emailInput };
+          } else {
+            return person;
+          }
+        })
+      );
+
+      _clearInputs();
+      _resetCreateEditState();
+    }
+  };
+
+  const insertPerson = async (
+    method: "create" | "update",
+    input: {
+      name: string;
+      email: string;
+      personId?: string;
+    }
+  ) => {
     if (!nameInput.trim() || !emailInput.trim()) return;
 
     try {
-      const inserted = await PersonService.create(nameInput, emailInput);
-
-      setPeople((people) => [...people, inserted]);
-      setNameInput("");
-      setEmailInput("");
+      return await PersonService[method](
+        ...[
+          ...(input.personId ? [input.personId] : []),
+          input.name,
+          input.email,
+        ]
+      );
     } catch (err) {
       treatApiError(err, {
         apiError: ({ error }) => {
@@ -234,21 +285,37 @@ function Main() {
           alert("Erro ao criar");
         },
       });
+
+      return false;
     }
   };
-
-  const editPerson = () => {};
 
   const deletePerson = async (id: string) => {
     try {
       await PersonService.delete(id);
       setPeople((people) => people.filter((person) => person._id !== id));
+
+      if (action === "edit" && editingId === id) {
+        _clearInputs();
+        _resetCreateEditState();
+      }
     } catch (err) {
       alert("Erro ao deletar");
     }
   };
 
   const sendToAll = () => {};
+
+  const _clearInputs = () => {
+    setNameInput("");
+    setEmailInput("");
+  };
+
+  const _resetCreateEditState = () => {
+    setAction(undefined);
+    setCreatingEditing(false);
+    setEditingId(undefined);
+  };
 
   return (
     <Container>
@@ -310,7 +377,7 @@ function Main() {
         {people.map((person, index) => (
           <Line strip={isPair(index)}>
             <LineText>{person.name}</LineText>
-            <LineEdit />
+            <LineEdit onClick={() => openEditView(person)} />
             <LineDelete onClick={() => deletePerson(person._id)} />
           </Line>
         ))}

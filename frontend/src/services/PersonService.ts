@@ -7,6 +7,7 @@ export default class PersonService {
     return res.data;
   }
 
+  static async create(...args: string[]): Promise<Person>;
   static async create(name: string, email: string) {
     const res = await axios.post<Person>(`${API_SERVER}/v1/people/`, {
       name,
@@ -15,6 +16,7 @@ export default class PersonService {
     return res.data;
   }
 
+  static async update(...args: string[]): Promise<void>;
   static async update(personId: string, name: string, email: string) {
     await axios.put<Person>(`${API_SERVER}/v1/people/${personId}`, {
       name,
