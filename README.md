@@ -4,6 +4,8 @@ Breve projeto para cadastrar uma lista de amigos e sortear o seu amigo secreto, 
 
 ![Preview do Projeto](preview.png)
 
+Teste essa aplicação: [https://infinite-coast-25222.herokuapp.com/](https://infinite-coast-25222.herokuapp.com/)
+
 # Instruções
 
 As instruções específicas de cada parte (front e back) estão localizados no README das respectivas pastas.
@@ -38,6 +40,16 @@ Insira as variáveis de ambiente (pode ser pelo Heroku Dashboard também):
 
 Repita para as todas as variáveis de ambiente (menos o PORT):
 
+Para enviar os email, você tem 2 opções:
+
+1. Gmail, recomendado para testar localmente + se tiver controle sobre a máquina que irá realizar o deploy
+
+2. Mailgun, enviar mensagens pelo SMTP do Mailgun. se está for a opção escolhida, você **DEVE DEIXAR O CAMPO GMAIL_USERNAME E GMAIL_PASSWORD** em branco, ou o sistema irá enviar pelo Gmail como padrão.
+
+Se você usar o Mailgun não insira as informações
+
+Se você for usar o SMTP do Google note que é extremamente provável que ele bloqueie a primeira vez e seja necessário "permitir aplicativos menos seguros" e mudar a senha para conseguir usar no Heroku.
+
 ```
 backend/.env.example
 
@@ -48,8 +60,17 @@ MONGO_USER=mongouserhere
 MONGO_PASSWORD=mongopasswordhere
 
 # Gmail
-GMAIL_USERNAME=gmailemailhere
-GMAIL_PASSWORD=gmailpasswordhere
+GMAIL_USERNAME=gmailemailhere # Só insira se não for usar o mailgun
+GMAIL_PASSWORD=gmailpasswordhere # Só insira se não for usar o mailgun
+
+# MailGun
+# Get on https://app.mailgun.com/app/account/security/api_keys
+MAILGUN_API_KEY=maigunapikey-here
+
+# Get on https://app.mailgun.com/app/sending/domains
+MAILGUN_DOMAIN=sandbox.mailgun.org
+
+MAILGUN_SENDER_EMAIL=example@gmail.com
 
 # Server
 PORT=8080 # NÃO INSIRA ESSE
