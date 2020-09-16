@@ -2,7 +2,7 @@ import nodemailer from "nodemailer";
 import config from "../config";
 
 export default class MailService {
-  static async sendTo(emails: string[], subject: string, text: string) {
+  static async send(emailForms: EmailForm[]) {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -11,13 +11,17 @@ export default class MailService {
       },
     });
 
-    const options = {
-      from: config.gmailUsername,
-      to: emails,
-      subject,
-      text,
-    };
+    await Promise.all(
+      emailForms.map(async (form) => {
+        const options = {
+          from: "Amigo Secreto",
+          to: form.to,
+          subject: form.subject,
+          text: form.text,
+        };
 
-    await transporter.sendMail(options);
+        await transporter.sendMail(options);
+      })
+    );
   }
 }

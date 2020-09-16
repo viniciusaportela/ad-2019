@@ -70,26 +70,47 @@ export default class PersonController {
       const users = await UserService.list();
 
       if (users.length === 0) {
-        next(
-          new InvalidUsersLength(
-            "There should be at least 2 users registered to start"
-          )
+        throw new InvalidUsersLength(
+          "There should be at least 2 users registered to start"
         );
       } else if (users.length % 2 !== 0) {
-        next(new InvalidUsersLength("The user count must be pair"));
+        throw new InvalidUsersLength("The user count must be pair");
       }
 
-      await MailService.sendTo(
-        users.map((user) => user.email),
-        "Amigo Secreto",
-        "Seu amigo sorteado é: "
-      );
+      const emailList: EmailForm[] = [];
+      while (users.length >= 2) {
+        const firstPerson = users[0];
+
+        // Random Second Person
+        const maximum = users.length - 1;
+        const minimum = 1;
+
+        const secondPersonIndex =
+          Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+        const secondPerson = users[secondPersonIndex];
+
+        emailList.push({
+          to: firstPerson.email,
+          subject: "Amigo Secreto",
+          text: `Seu amigo secreto é: ${secondPerson.name}`,
+        });
+
+        emailList.push({
+          to: secondPerson.email,
+          subject: "Amigo Secreto",
+          text: `Seu amigo secreto é: ${firstPerson.name}`,
+        });
+
+        users.splice(secondPersonIndex, 1);
+        users.splice(0, 1);
+      }
+
+      await MailService.send(emailList);
 
       await PersonService.deleteAll();
 
       res.sendStatus(200);
     } catch (e) {
-      console.log(e);
       next(e);
     }
   }
