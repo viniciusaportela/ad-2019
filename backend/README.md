@@ -2,9 +2,15 @@
 
 # Instruções
 
-Crie um arquivo `.env` e adicione as configurações neste, use o arquivo `.env.example` como base. Utilizei o Gmail para o envio de emails, logo, se for também utilizar o Gmail para enviar mensagens, **você deve antes permitir acesso a app menos seguros:**
+Crie um arquivo `.env` e adicione as configurações neste, use o arquivo `.env.example` como base.
+
+Se você for utilizar o Gmail, você **deve antes permitir aplicativos menos seguros**:
 
 > https://myaccount.google.com/lesssecureapps?pli=1
+
+Também é importante salientar que provavelmente não funcionará na primeira tentativa, pois o Google irá bloquear o pedido até você "reconhecer a atividade". Para deploy em ambientes remotos também é possível que ele peça que você permita o acesso na máquina remota
+
+Se você for utilizar o Mailgun, insira os campos no `.env` e **NÃO INSIRA OS CAMPOS DO GMAIL**
 
 Instale as dependências e rode o servidor usando o comando:
 
