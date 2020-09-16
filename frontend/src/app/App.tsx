@@ -184,7 +184,28 @@ function App() {
     }
   };
 
-  const sendToAll = () => {};
+  const sendToAll = async () => {
+    try {
+      await PersonService.sendToAll();
+
+      setPeople([]);
+      _clearInputs();
+      _resetCreateEditState();
+    } catch (err) {
+      treatApiError(err, {
+        apiError: ({ error }) => {
+          if (error === ErrorCodes.INVALID_USERS_LENGTH) {
+            alert("A quantidade de usuários deve ser maior que 2 e par");
+          } else {
+            alert("Erro interno");
+          }
+        },
+        clientError: () => {
+          alert("Erro ao enviar emails");
+        },
+      });
+    }
+  };
 
   const _clearInputs = () => {
     setNameInput("");
